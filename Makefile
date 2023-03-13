@@ -23,6 +23,10 @@ clean: mostlyclean
 	$(RM) *.run.xml *.synctex.gz
 	$(RM) *.d
 
+format:
+	latexindent -w -s *.tex
+	${RM} *.bak[0-9]
+
 .PHONY: all clean doc mostlyclean pdf
 
 # Include auto-generated dependencies
