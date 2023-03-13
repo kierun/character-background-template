@@ -12,7 +12,7 @@ pdf: $(DOCNAME).pdf
 
 # Rules
 %.pdf: %.tex
-	$(LATEXMK) -pdf -M -MP -MF $*.d $*
+	$(LATEXMK) -auxdir=./build -pdfxe -M -MP -MF $*.d $*
 
 mostlyclean:
 	$(LATEXMK) -silent -c
