@@ -1,0 +1,8 @@
+defaultIndent: "    "
+modifyLineBreaks:
+  textWrapOptions:
+    columns: -1
+lookForAlignDelims:
+  tabular:
+    multiColumnGrouping: 1
+    alignDoubleBackSlash: 0
