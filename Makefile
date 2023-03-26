@@ -1,18 +1,23 @@
 # Tools
 LATEXMK = latexmk
 RM = rm -f
+FIND = find
 
 # Project specific settings
 DOCNAME = character-background
 
+# preview and reload options
+PREVIEW=-view=pdf -pvc
+
 # Targets
 all: doc
 doc: pdf
+pdf: PREVIEW=
 pdf: $(DOCNAME).pdf
 
 # Rules
-%.pdf: %.tex
-	$(LATEXMK) -auxdir=./build -pdfxe -M -MP -MF $*.d $*
+%.pdf: %.tex FORCE
+	$(LATEXMK) -xelatex -interaction=nonstopmode $(PREVIEW) $*
 
 mostlyclean:
 	$(LATEXMK) -silent -c
@@ -23,11 +28,20 @@ clean: mostlyclean
 	$(RM) *.run.xml *.synctex.gz
 	$(RM) *.d
 
-format:
-	latexindent -w -s *.tex
-	${RM} *.bak[0-9]
+format: indent/
+	# format all tex and sty files; stick the cruft in the indent/ directory, then delete the cruft
+	latexindent $(wildcard *.tex) $(wildcard src/*.tex) $(wildcard *.sty) \
+		--local --overwriteIfDifferent --silent --modifylinebreaks --cruft=indent/
+	# remove all backup files created by latexindent
+	$(FIND) indent -name "*.bak*" -maxdepth 1 -delete
+
+indent/:
+	mkdir -p indent
 
 .PHONY: all clean doc mostlyclean pdf
 
 # Include auto-generated dependencies
 -include *.d
+
+.PHONY: FORCE
+FORCE:
