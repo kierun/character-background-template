@@ -18,6 +18,7 @@ repos:
     rev: V3.20.4
     hooks:
       - id: latexindent
+        args: [-l, -m, -s, -w]
   #     ___________________________
   # ___/ Semantic commit messages. \_____________________________________________
   - repo: https://github.com/jorisroovers/gitlint
