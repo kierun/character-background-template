@@ -1,0 +1,15 @@
+[general]
+# You HAVE to add the rule here to enable it, only configuring (such as below)
+# does NOT enable it.
+contrib=contrib-title-conventional-commits,CT1
+
+# verbosity should be a value between 1 and 3, the commandline -v flags take
+# precedence over this
+verbosity = 2
+
+# We do not require a body.
+ignore=B6,body-is-missing
+
+[contrib-title-conventional-commits]
+# Specify allowed commit types. For details see: https://www.conventionalcommits.org/
+#types = bugfix,user-story,epic
