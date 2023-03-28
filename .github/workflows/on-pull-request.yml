@@ -1,0 +1,29 @@
+on:
+  merge_group:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+name: on-pull-request
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout pre-commit action"
+        uses: actions/checkout@v3
+      - name: "Setup pre-commit action"
+        uses: actions/setup-python@v3
+      - name: "run pre-commit action"
+        uses: pre-commit/action@v3.0.0
+
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Setup LaTeX action"
+        uses: actions/checkout@v2
+      - name: "Run LaTeX action"
+        uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: |
+            apk update && apk add make latekmk latexindent
+            make
