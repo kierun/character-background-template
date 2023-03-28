@@ -223,5 +223,7 @@ build/
 
 # latexindent
 indent/
+*.bak[0-9]
+
 # intellij IDE
 .idea/

@@ -1,0 +1,26 @@
+repos:
+  #     _________________
+  # ___/ General things \______________________________________________________
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: pretty-format-json
+      - id: trailing-whitespace
+  #     __________________
+  # ___/ LaTeX specifics \______________________________________________________
+  - repo: https://github.com/cmhughes/latexindent.pl.git
+    rev: V3.20.4
+    hooks:
+      - id: latexindent
+  #     ___________________________
+  # ___/ Semantic commit messages. \_____________________________________________
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.0dev
+    hooks:
+      - id: gitlint
