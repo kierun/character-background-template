@@ -1,0 +1,122 @@
+%
+% A package for styling TTRGRPG character sheets and other documents.
+%
+% This package provides a set of stylesheets you can use for your
+% gaming documents. It comes with three styles currently ---
+%
+% - modern, for modern-day or cyberpunk games
+% - fantasy, for fantasy and medieval games
+% - eldritch, for horror and mystery games
+%
+% You can use these stylesheets by including the package in your
+% document and passing the stylesheet name as an option, eg:
+%
+% \usepackage[modern]{character-background}
+%
+\ExplSyntaxOn
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{rpg}[2023/03/25 rpg]
+
+%
+% Packages
+%
+\RequirePackage[UKenglish]{babel}% http://ctan.org/pkg/babel
+\RequirePackage{fontspec} % http://ctan.org/pkg/fontspec
+\RequirePackage[utf8]{inputenc} % http://ctan.org/pkg/inputenc
+\RequirePackage[UKenglish]{isodate}% http://ctan.org/pkg/isodate
+\RequirePackage{wallpaper} % http://ctan.org/pkg/wallpaper
+\RequirePackage{xcolor} % https://www.ctan.org/pkg/xcolor
+
+%
+% Shared Page Styles - header and footer formats, for example
+%
+\setsecnumdepth{subsection}
+\makepagestyle{rpg}
+\setlength{\headwidth}{\dimexpr\textwidth+\marginparsep+\marginparwidth\relax}
+\makerunningwidth{rpg}{\headwidth}
+\makeevenhead{rpg}{\rightmark}{}{\leftmark}
+\makeoddhead{rpg}{\leftmark}{}{\rightmark}
+\makeevenfoot{rpg}{}{\thepage}{\today}
+\makeoddfoot{rpg}{\today}{\thepage}{}
+\makeheadrule{rpg}{\headwidth}{1pt}
+\makefootrule{rpg}{\headwidth}{1pt}{1pt}
+\pagestyle{rpg}
+
+%
+% Palette
+%
+% define a palette of colours we can use in any style
+% add new ones by visiting https://www.color-hex.com/
+%
+\definecolor {steelblue}       {HTML} {4682B4}
+\definecolor {manuscriptbeige} {HTML} {E9C89E}
+\definecolor {driedblood}      {HTML} {7C2E2E}
+
+%
+% Stylesheets
+%
+% Sets the chapter style, font, and colors for the different styles
+%
+% to set, eg, chapter, section, part titles -- https://stackoverflow.com/a/53578046/6722
+%
+
+% the modern style
+\NewDocumentCommand {\RpgSetStylesheetModern} { }
+{
+    \chapterstyle{lyhne}
+    \setmainfont{PT~Sans~Narrow}
+
+    \colorlet {rpgrulecolor} {steelblue}
+}
+
+% the fantasy style
+\NewDocumentCommand {\RpgSetStylesheetFantasy} { }
+{
+    \chapterstyle{dash}
+    \setmainfont{fbb}
+    % texdoc memoir, page 103
+    \renewcommand*{\booknamefont}{\huge\fontspec{QTUSA-Uncial.otf}}
+    \renewcommand*{\booknumfont}{\huge\fontspec{QTUSA-Uncial.otf}}
+    \renewcommand*{\booktitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}}
+    \renewcommand*{\partnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \colorlet {rpgrulecolor} {manuscriptbeige} }
+
+% the eldritch style
+\NewDocumentCommand {\RpgSetStylesheetEldritch} { }
+{
+    \chapterstyle{dowding}
+    \setmainfont{fbb}
+    % texdoc memoir, page 103
+    \renewcommand*{\booknamefont}{\huge\fontspec{yswab.otf}}
+    \renewcommand*{\booknumfont}{\huge\fontspec{yswab.otf}}
+    \renewcommand*{\booktitlefont}{\Huge\fontspec{yswab.otf}}
+    \renewcommand*{\partnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{yswab.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{yswab.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{yswab.otf}} \colorlet {rpgrulecolor} {driedblood} }
+
+%
+% Process Options
+%
+% the default stylesheet is modern
+%
+\RpgSetStylesheetModern
+
+% switch to the fantasy stylesheet?
+\DeclareOption{fantasy}{
+    \RpgSetStylesheetFantasy
+}
+
+% switch to the eldritch stylesheet?
+\DeclareOption{eldritch}{
+    \RpgSetStylesheetEldritch
+}
+
+% explicit switch to the modern stylesheet - the default
+\DeclareOption{modern}{
+    \RpgSetStylesheetModern
+}
+
+% unknown option should raise a warning
+\DeclareOption*{\PackageWarning{character-background}{Unknown ‘\CurrentOption’}}
+
+% now actually process the options
+\ProcessOptions\relax
+
+\ExplSyntaxOff
