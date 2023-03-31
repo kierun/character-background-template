@@ -23,3 +23,19 @@ pre-commit autoupdate                       # To update pre-commit hooks.
 ### CI/CD
 
 … To be done soon.
+
+## Styles
+
+We can have several styles.
+
+### Modern
+
+![Modern style](showcase/modern.png?raw=true "Modern style")
+
+### Fantasy
+
+![Fantasy style](showcase/fantasy.png?raw=true "Fantasy style")
+
+### Eldritch
+
+![Eldritch style](showcase/eldritch.png?raw=true "Eldritch style")
