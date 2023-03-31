@@ -1,0 +1,78 @@
+% crap
+\usepackage{lipsum}
+
+% http://tex.stackexchange.com/a/847/6928
+\usepackage{hyperref}
+\hypersetup{colorlinks,
+            linkcolor={red!50!black},
+            citecolor={blue!50!black},
+            urlcolor={blue!80!black}
+}
+% http://ctan.org/pkg/longtable
+\usepackage{longtable}
+
+% http://ctan.org/pkg/tabu
+\usepackage{tabu}
+
+% https://www.ctan.org/pkg/booktabs
+\usepackage{booktabs}
+
+% http://ctan.org/pkg/graphicx
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{RPG character background}
+\date{\today}
+\author{Yann Golanski}
+
+% start.
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+
+% Your content goes here
+\mainmatter
+
+\part{Beginnings}
+
+\chapter{Inception}
+
+\input{tab-character-description.tex}
+
+\lipsum[1]
+
+\lipsum[2]
+
+\section{Something happened}
+
+\subsection{The first thing}
+
+\lipsum[3]
+
+\lipsum[4]
+
+\subsection{The second thing}
+
+\lipsum[5]
+
+\subsubsection{The second thing, part B}
+
+\lipsum[6]
+
+\part{The Full Story}
+
+\chapter{The story so far\ldots}
+
+\input{tab-npc.tex}
+
+\chapter{Character details}
+
+\lipsum[7]
+
+\chapter{Rumours and facts for other players}
+
+\lipsum[8]
+
+% End document
+\end{document}
