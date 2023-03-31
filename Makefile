@@ -2,6 +2,7 @@
 LATEXMK = latexmk
 RM = rm -f
 FIND = find
+GM = gm
 
 # Project specific settings
 DOCNAME = character-background
@@ -18,6 +19,16 @@ pdf: $(DOCNAME).pdf
 # Rules
 %.pdf: %.tex FORCE
 	$(LATEXMK) -xelatex -interaction=nonstopmode $(PREVIEW) $*
+
+showcase/%.png: PREVIEW=
+showcase/%.png: FORCE
+	$(LATEXMK) -xelatex -interaction=nonstopmode -output-directory=showcase $(PREVIEW) $*
+	$(GM) convert -density 720 -resize 1024x "showcase/$*.pdf[4]" showcase/$*.png
+	rm showcase/$*.pdf
+
+showcase: showcase/modern.png
+showcase: showcase/fantasy.png
+showcase: showcase/eldritch.png
 
 mostlyclean:
 	$(LATEXMK) -silent -c
