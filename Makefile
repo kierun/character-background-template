@@ -41,7 +41,7 @@ clean: mostlyclean
 
 format: indent/
 	# format all tex and sty files; stick the cruft in the indent/ directory, then delete the cruft
-	latexindent $(wildcard *.tex) $(wildcard src/*.tex) $(wildcard *.sty) \
+	latexindent $(shell $(FIND) . -name "*.tex") $(shell $(FIND) . -name "*.sty") \
 		--local --overwriteIfDifferent --silent --modifylinebreaks --cruft=indent/
 	# remove all backup files created by latexindent
 	$(FIND) indent -name "*.bak*" -maxdepth 1 -delete
