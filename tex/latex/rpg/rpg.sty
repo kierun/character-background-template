@@ -29,6 +29,35 @@
 \RequirePackage{yfonts-otf} % https://www.ctan.org/pkg/yfonts-otf
 
 %
+% For Background Wallpapers;
+%
+\NewDocumentCommand\SetRpgWallpaper{ m m }{%
+    % Set the name of the wallpaper to use -- this does
+    % not turn on the wallaper -- for this you need to
+    % invoke EnabledRpgWallpaper
+    \fp_set:Nn \l__rpg_wallpaperscale_fp {#1}
+    \tl_set:Nn \l__rpg_wallpaper_tl {#2}
+}
+\NewDocumentCommand\ClearRpgWallpaper{  }{%
+    % Clear the wallpaper, and disable it
+    \fp_set:Nn \l__rpg_wallpaperscale_fp {1.0}
+    \tl_set:Nn \l__rpg_wallpaper_tl {blank}
+    \DisableRpgWallpaper
+}
+\NewDocumentCommand\EnableRpgWallpaper{ }{%
+    % Enable the wallpaper option
+    \bool_set_true:N \l__rpg_wallpaperenabled_bool
+}
+\NewDocumentCommand\DisableRpgWallpaper{  }{%
+    % Disable the wallpaper option
+    \bool_set_false:N \l__rpg_wallpaperenabled_bool
+}
+
+% The wallpaper should be disabled by default - turn it on
+% with the [wallpaper] package option
+\ClearRpgWallpaper
+
+%
 % Shared Page Styles - header and footer formats, for example
 %
 \setsecnumdepth{subsection}
@@ -68,6 +97,21 @@
     \setmainfont{PT~Sans~Narrow}
 
     \colorlet {rpgrulecolor} {steelblue}
+
+    \SetRpgWallpaper{1.1}{crumpled-white-paper}
+
+    \ApplyRpgStylesheet
+}
+
+\NewDocumentCommand{\ApplyRpgStylesheet}{}{%
+    % Apply the stylesheet options to the document
+    \bool_if:nTF \l__rpg_wallpaperenabled_bool
+    {
+        \CenterWallPaper{\fp_to_decimal:N{\l__rpg_wallpaperscale_fp}}{\l__rpg_wallpaper_tl}
+    }
+    {
+        \ClearWallPaper
+    }
 }
 
 % the fantasy style
@@ -79,7 +123,15 @@
     \renewcommand*{\booknamefont}{\huge\fontspec{QTUSA-Uncial.otf}}
     \renewcommand*{\booknumfont}{\huge\fontspec{QTUSA-Uncial.otf}}
     \renewcommand*{\booktitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}}
-    \renewcommand*{\partnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \colorlet {rpgrulecolor} {manuscriptbeige} \CenterWallPaper{1.1}{yellowed-paper} }
+    \renewcommand*{\partnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}}
+
+    \colorlet {rpgrulecolor} {manuscriptbeige}
+
+    \SetRpgWallpaper{1.1}{yellowed-paper}
+
+    \ApplyRpgStylesheet
+
+}
 
 % the eldritch style
 \NewDocumentCommand {\RpgSetStylesheetEldritch} { }
@@ -90,13 +142,27 @@
     \renewcommand*{\booknamefont}{\huge\fontspec{yswab.otf}}
     \renewcommand*{\booknumfont}{\huge\fontspec{yswab.otf}}
     \renewcommand*{\booktitlefont}{\Huge\fontspec{yswab.otf}}
-    \renewcommand*{\partnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{yswab.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{yswab.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{yswab.otf}} \colorlet {rpgrulecolor} {driedblood} }
+    \renewcommand*{\partnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{yswab.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{yswab.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{yswab.otf}}
+
+    \colorlet {rpgrulecolor} {driedblood}
+
+    \SetRpgWallpaper{1.1}{white-linen-paper}
+
+    \ApplyRpgStylesheet
+}
 
 %
 % Process Options
 %
 % the default stylesheet is modern
 %
+% turn on background wallpaper
+\DeclareOption{wallpaper}{%
+    % note the wallpaper option must be declared high up in the file -- otherwise it switches
+    % on wallpaper _after_ the style has been applied.
+    \EnableRpgWallpaper
+}
+
 \RpgSetStylesheetModern
 
 % switch to the fantasy stylesheet?
