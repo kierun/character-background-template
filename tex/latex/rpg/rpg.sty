@@ -27,7 +27,7 @@
 \RequirePackage{wallpaper} % http://ctan.org/pkg/wallpaper
 \RequirePackage{xcolor} % https://www.ctan.org/pkg/xcolor
 \RequirePackage{yfonts-otf} % https://www.ctan.org/pkg/yfonts-otf
-
+\RequirePackage{parskip}
 %
 % For Background Wallpapers;
 %
@@ -185,5 +185,62 @@
 
 % now actually process the options
 \ProcessOptions\relax
+
+% components
+
+%
+% rpgfield is a single key-value style element used to display info like
+%
+% \rpgfield{name}{Conan}
+% \rpgfield{profession}{Barbarian}
+% \rpgfield{nationality}{Cimmeria}
+%
+\NewDocumentCommand{\rpgfield}{ m m }{
+    {\hangindent=\parindent\noindent\textbf{#1:}\thickspace{#2}\par}
+}
+
+%
+% vertical space --- we need to put some vertical space
+%   between elements like fields, idents, rules, etc. These
+%   are 'standard sizes' of gap which are designed to work
+%   nicely together.
+%
+% separators for going between fields, rules, etc.
+%
+\def\rpgthinvskip{\vspace{0.25\baselineskip}\nobreak} % analagous with \thinspace
+\def\rpgvskip{\vspace{0.50\baselineskip}\nobreak} % like \space
+\def\rpgthickvskip{\vspace{0.75\baselineskip}\nobreak} % \thickspace
+\def\rpgdoublevskip{\vspace{1.0\baselineskip}\nobreak} % thicker than thick!
+
+%
+% rpgident is a slug for describing things in the game -- places, people, spells, equipment, etc.
+%
+\NewDocumentCommand{\rpgident}{
+    m % mandatory title
+    o % optional subtitle
+}{
+    {
+            % this skipping behaviour can be added to the state-based stuff.
+            \setlength{\parskip}{-0.1em} \rpgvskip {\noindent\Large{\textsc{\textbf{#1}}}\par\nobreak}
+            \IfNoValueF {#2} {\rpgthinvskip\noindent\emph{#2}\par\nobreak}
+        }
+}
+
+\NewDocumentEnvironment{rpgfields}{ +b}{
+    \rpgthinvskip
+    #1
+    \rpgthinvskip
+}{}
+
+\NewDocumentEnvironment{rpgentity}{
+    m % #1 - mandatory title
+    o % #2 - optional subtitle
+    +b % #3 - main body
+}{
+    \rpgident{#1}[#2]
+
+    #3
+
+}{}
 
 \ExplSyntaxOff
