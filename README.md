@@ -26,16 +26,19 @@ pre-commit autoupdate                       # To update pre-commit hooks.
 
 ## Styles
 
-We can have several styles.
+We can have several styles, in both A4 and a5 variants.
 
 ### Modern
 
 ![Modern style](showcase/modern.png?raw=true "Modern style")
+![Modern style, A5](showcase/modern-a5.png?raw=true "Modern style, A5 paper")
 
 ### Fantasy
 
 ![Fantasy style](showcase/fantasy.png?raw=true "Fantasy style")
+![Fantasy style, A5](showcase/fantasy-a5.png?raw=true "Fantasy style, A5 paper")
 
 ### Eldritch
 
 ![Eldritch style](showcase/eldritch.png?raw=true "Eldritch style")
+![Eldritch style, A5](showcase/eldritch-a5.png?raw=true "Eldritch style, A5 paper")
