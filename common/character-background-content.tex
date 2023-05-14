@@ -20,6 +20,8 @@
 % http://ctan.org/pkg/graphicx
 \usepackage{graphicx}
 
+\usepackage{verbatim} % used for pulling in code samples
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{RPG character background}
 \date{\today}
@@ -66,13 +68,167 @@
 
 \input{tab-npc.tex}
 
-\chapter{Character details}
+\chapter{Visual Design Components}
 
-\lipsum[7]
+In this chapter we look at the different typesetting components provided by the \texttt{rpg} package.
 
-\chapter{Rumours and facts for other players}
+\section{RPG Entities}
+
+An RPG is full of things like characters, places, equipment, and spells. Here's a character as an example;
+
+\rpgdoublevskip
+\input{listing-entity-npc}
+\rpgdoublevskip
+
+We call these \emph{entities}. The \texttt{rpg} package provides a few commands you can use to typeset entities.
+
+\subsection{rpg idents}
+
+\rpgvskip
+\hrule
+\rpgvskip
+\rpgident{Blackbeard}[Pirate]
+\rpgdoublevskip
+\hrule
+\rpgvskip
+
+The \verb|\rpgident{name}[tagline]| typesets a name and an optional tagline.
+
+This helps make your source material easier to navigate and can be used to design lists of
+
+\subsection{fields and field sets}
+
+\rpgvskip
+\hrule
+\rpgvskip
+\rpgfield{real name}{Edward Teach}
+\rpgfield{age}{32}
+\rpgfield{hair}{black}
+\rpgfield{eyes}{brown}
+\rpgvskip
+\hrule
+\rpgvskip
+
+Games tend to be full of statistics, and the \verb|\rpgfield{label}{value}| command typesets a single field, like
+
+These can be stacked, and to give them suitable space they should be wrapped in the \verb|\begin{rpgfields}...\end{rpgfields}| environment;
+
+\rpgvskip
+\hrule
+\begin{rpgfields}
+    \rpgfield{STR}{18/00}
+    \rpgfield{DEX}{14}
+    \rpgfield{INT}{9}
+    \rpgfield{CON}{16}
+    \rpgfield{WIS}{7}
+    \rpgfield{CHA}{12}
+\end{rpgfields}
+\hrule
+\rpgvskip
+
+\subsection{RPG Entity Environment}
+
+These all come together in the \verb|\begin{rpgentity}...\end{rpgentity}| environment, which wraps around an entity and provides a nice overall look.
+
+See fig.~\ref{rpgentity-example} on page \pageref{rpgentity-example} for the example markup. Chapter \ref{gameworld} on page \pageref{gameworld} is a showcase of the different types of entities you can typeset.
+
+\begin{figure*}[h]
+    \label{rpgentity-example}
+    \verbatiminput{listing-entity-npc}
+    \caption{The markup for the example entity.}
+\end{figure*}
+
+\chapter{The Gameworld}\label{gameworld}
+
+Here are some example entities, showing how the \texttt{rpgentity} environment can be used to typeset a wide variety of elements like characters, places, ships, and spells.
+
+\section{Crew of the Queen Anne's Revenge}
+
+\begin{rpgentity}{Blackbeard}[Pirate Captain]
+    \rpgfield{beard}{black}
+    \rpgfield{age}{32}
+    \rpgfield{nationality}{English}
+
+    Fearsome pirate captain, known for his long black beard.
+
+    Blackbeard's name is spoken in hushed whispers by honest sailors and hardenned pirates alike. It is said he is posessed by demons; it is said he shows no mercy; it is said he can sail faster than the wind.
+
+    Blackbeard's reputation has earned him great respect among fellow pirates and instilled fear in his enemies. He is more legend than man, though, so these rumours cannot be trusted.
+
+\end{rpgentity}
+
+\begin{rpgentity}{Calico Jack}[Pirate Captain]
+    Calico Jack's ship was the \emph{Ranger.} He was captured by the Royal Navy and hanged in 1720.
+\end{rpgentity}
+
+\begin{rpgentity}{Starbuck}
+    First mate on the \emph{Pequod,} Ahab's ship.
+\end{rpgentity}
+
+\begin{rpgentity}{Queequeg}
+    \rpgfield{nationality}{Rokovoko}
+    \rpgfield{favorite weapon}{harpoon}
+\end{rpgentity}
+
+\begin{rpgentity}{Anne Bonny}[Mysterious Irish Pirate]
+    A fierce pirate, known for her red hair. \lipsum[][54-58]
+\end{rpgentity}
+
+\begin{rpgentity}{Mary Read}[Pirate]
+    Mary Read was a pirate who sailed with Anne Bonny and Calico Jack. She was captured by the Royal Navy and died in prison. She was pregnant at the time.
+\end{rpgentity}
+
+\section{Ships of the Age Of Sail}
+
+Other kinds of entities --- in this case a ship --- using the same structure;
+
+\begin{rpgentity}{The Marie Celeste}[Mysteriously abandoned ship]
+    \rpgfield{launched}{1861}
+    \rpgfield{abandonned}{1872}
+    This ship disappeared mysteriously, then even more mysteriously appeared in 1872; creepy!
+\end{rpgentity}
+
+\begin{rpgentity}{Queen Anne's Revenge}[Blackbeard's Ship]
+    \rpgfield{captain}{Edward Teach}
+    \rpgfield{crew}{Calico Jack \\ Anne Bonny \\ Mary Read}
+    It was sunk by the Royal Navy in 1718 during the War of the Spanish Succession.
+\end{rpgentity}
+
+\begin{rpgentity}{Hispaniola}
+    \rpgfield{captain}{Smollett}
+    \rpgfield{crew}{Pintel, Ragetti}
+    This is the ship in \emph{Treasure Island}.
+\end{rpgentity}
+
+\section{Spells}
+
+\begin{rpgentity}{Kraken's Grasp}[5th-level spell]
+    \rpgfield{description}{Hold a ship in place.}
+    \rpgfield{type}{ritual}
+    \rpgfield{difficulty}{master}
+    \rpgfield{activation}{verbal, components}
+    \rpgfield{components}{a piece of rope, a piece of seaweed, a piece of coral}
+
+    When cast, five great tentacles rise from the depths and wrap around the target ship. The ship becomes stationary and cannot manouevre. The spell lasts for 2d6 minutes before the tentacles release their grip and return to the sea.
+\end{rpgentity}
+
+\begin{rpgentity}{Charm of Making}[5th-level spell]
+    \rpgfield{description}{A charm that allows the user to create a small object.}
+    \rpgfield{type}{charm}
+    \rpgfield{difficulty}{master}
+    \rpgfield{activation}{verbal}
+    \rpgfield{components}{a willow wand, a piece of ribbon, an object made of roughly the same material as the object to be created}
+\end{rpgentity}
 
 \lipsum[8]
+
+\section{locations}
+
+\rpgident{Island Fortress}
+
+\rpgfield{description}{A fortress on an island.}
+\rpgfield{type}{fortress}
+\rpgfield{area}{off the coast of Cuba}
 
 % End document
 \end{document}
