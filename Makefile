@@ -24,7 +24,7 @@ showcase/%.png: PREVIEW=
 showcase/%.png: FORCE
 	$(LATEXMK) -xelatex -interaction=nonstopmode -halt-on-error -output-directory=showcase $(PREVIEW) $*
 	$(GM) convert -density 720 -resize 1024x "showcase/$*.pdf[4]" showcase/$*.png
-	rm showcase/$*.pdf
+	rm -f showcase/$*.pdf
 
 showcase: showcase/modern.png
 showcase: showcase/modern-a5.png

@@ -48,6 +48,16 @@
     % Enable the wallpaper option
     \bool_set_true:N \l__rpg_wallpaperenabled_bool
 }
+\NewDocumentCommand\EnableRpgMedialS{ }{%
+    % Enable the 'medials' (medial s) option for fantasy, which uses the early-modern
+    %     long-s character -- more authentic but less readable to modern audiences.
+    %     Requires the user's system to have the 'Sabon Next LT Pro' font installed.
+    \bool_set_true:N \l__rpg_medialsenabled_bool
+}
+\NewDocumentCommand\DisableRpgMedialS{ }{%
+    % Disable the medial-s option for fantasy
+    \bool_set_false:N \l__rpg_medialsenabled_bool
+}
 \NewDocumentCommand\DisableRpgWallpaper{  }{%
     % Disable the wallpaper option
     \bool_set_false:N \l__rpg_wallpaperenabled_bool
@@ -56,6 +66,8 @@
 % The wallpaper should be disabled by default - turn it on
 % with the [wallpaper] package option
 \ClearRpgWallpaper
+% Don't use the authentic-but-hard-to-read medial-s by default.
+\DisableRpgMedialS
 
 %
 % Shared Page Styles - header and footer formats, for example
@@ -112,6 +124,13 @@
     {
         \ClearWallPaper
     }
+
+    \bool_if:nTF \l__rpg_medialsenabled_bool
+    {
+        \setmainfont[Ligatures = Rare, Style=Historic]{Sabon~Next~LT~Pro}
+    }
+    {
+    }
 }
 
 % the fantasy style
@@ -161,6 +180,12 @@
     % note the wallpaper option must be declared high up in the file -- otherwise it switches
     % on wallpaper _after_ the style has been applied.
     \EnableRpgWallpaper
+}
+
+\DeclareOption{medials}{%
+    % note the wallpaper option must be declared high up in the file -- otherwise it switches
+    % on wallpaper _after_ the style has been applied.
+    \EnableRpgMedialS
 }
 
 \RpgSetStylesheetModern
