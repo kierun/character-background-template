@@ -48,11 +48,6 @@
     % Enable the wallpaper option
     \bool_set_true:N \l__rpg_wallpaperenabled_bool
 }
-\NewDocumentCommand\DisableRpgWallpaper{  }{%
-    % Disable the wallpaper option
-    \bool_set_false:N \l__rpg_wallpaperenabled_bool
-}
-
 \NewDocumentCommand\EnableRpgMedialS{ }{%
     % Enable the 'medials' (medial s) option for fantasy, which uses the early-modern
     %     long-s character -- more authentic but less readable to modern audiences.
@@ -62,6 +57,10 @@
 \NewDocumentCommand\DisableRpgMedialS{ }{%
     % Disable the medial-s option for fantasy
     \bool_set_false:N \l__rpg_medialsenabled_bool
+}
+\NewDocumentCommand\DisableRpgWallpaper{  }{%
+    % Disable the wallpaper option
+    \bool_set_false:N \l__rpg_wallpaperenabled_bool
 }
 
 \NewDocumentCommand\SetRpgFonts{ m m }{
