@@ -42,3 +42,8 @@ We can have several styles, in both A4 and a5 variants.
 
 ![Eldritch style](showcase/eldritch.png?raw=true "Eldritch style")
 ![Eldritch style, A5](showcase/eldritch-a5.png?raw=true "Eldritch style, A5 paper")
+
+### Key of Solomon
+
+![Key of Solomon style](showcase/solomon.png?raw=true "Key of Solomon style")
+![Key of Solomon style, A5](showcase/solomon-a5.png?raw=true "Key of Solomon style, A5 paper")

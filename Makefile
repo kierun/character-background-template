@@ -32,6 +32,8 @@ showcase: showcase/fantasy.png
 showcase: showcase/fantasy-a5.png
 showcase: showcase/eldritch.png
 showcase: showcase/eldritch-a5.png
+showcase: showcase/solomon.png
+showcase: showcase/solomon-a5.png
 
 mostlyclean:
 	$(LATEXMK) -silent -c

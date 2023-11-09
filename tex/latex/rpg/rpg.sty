@@ -63,6 +63,11 @@
     \bool_set_false:N \l__rpg_wallpaperenabled_bool
 }
 
+\NewDocumentCommand\SetRpgFonts{ m m }{
+    \renewfontfamily\rpgprimaryfont{#1}
+    \renewfontfamily\rpgsecondaryfont{#2}
+}
+
 % The wallpaper should be disabled by default - turn it on
 % with the [wallpaper] package option
 \ClearRpgWallpaper
@@ -70,19 +75,151 @@
 \DisableRpgMedialS
 
 %
-% Shared Page Styles - header and footer formats, for example
+% Page Styles - header and footer formats, for example
 %
-\setsecnumdepth{subsection}
-\makepagestyle{rpg}
-\setlength{\headwidth}{\dimexpr\textwidth+\marginparsep+\marginparwidth\relax}
-\makerunningwidth{rpg}{\headwidth}
-\makeevenhead{rpg}{\rightmark}{}{\leftmark}
-\makeoddhead{rpg}{\leftmark}{}{\rightmark}
-\makeevenfoot{rpg}{}{\thepage}{\today}
-\makeoddfoot{rpg}{\today}{\thepage}{}
-\makeheadrule{rpg}{\headwidth}{1pt}
-\makefootrule{rpg}{\headwidth}{1pt}{1pt}
-\pagestyle{rpg}
+
+\makepagestyle{rpgmodern}
+\makerunningwidth{rpgmodern}{\headwidth}
+\makeevenhead{rpgmodern}{\rightmark}{}{\leftmark}
+\makeoddhead{rpgmodern}{\leftmark}{}{\rightmark}
+\makeevenfoot{rpgmodern}{}{\thepage}{}
+\makeoddfoot{rpgmodern}{}{\thepage}{}
+\makeheadrule{rpgmodern}{\headwidth}{1pt}
+\makefootrule{rpgmodern}{\headwidth}{1pt}{1pt}
+\pagestyle{rpgmodern}
+
+%
+% fantasy page style, based on De Aetna by Bembo
+%
+\makepagestyle{rpgfantasy}
+\makeevenhead{rpgfantasy}{}{\small\rpgprimaryfont\leftmark}{}
+\makeoddhead{rpgfantasy}{}{\small\rpgprimaryfont\rightmark}{}
+\makeevenfoot{rpgfantasy}{}{\thepage}{}
+\makeoddfoot{rpgfantasy}{}{\thepage}{}
+
+%
+% key of solomon page style, based on the Key of Solomon
+% https://ia801308.us.archive.org/15/items/b24884431/b24884431.pdf
+%
+\makepagestyle{rpgsolomon}
+\makeevenhead{rpgsolomon}{}{\small\rpgsecondaryfont\emph{\leftmark}}{\thepage}
+\makeoddhead{rpgsolomon}{\thepage}{\small\rpgsecondaryfont\emph{\rightmark}}{}
+\makeevenfoot{rpgsolomon}{}{}{}
+\makeoddfoot{rpgsolomon}{}{}{}
+
+%
+% eldritch page style, based on the Book of Black Magic and Pacts
+% https://ia803006.us.archive.org/22/items/BookOfBlackMagicWaite/Book%20of%20Black%20Magic%20-%20Waite.pdf
+%
+\makepagestyle{rpgeldritch}
+\makeevenhead{rpgeldritch}{}{\small\rpgsecondaryfont\textbf{\leftmark}}{}
+\makeoddhead{rpgeldritch}{}{\small\rpgsecondaryfont\textbf{\rightmark}}{}
+\makeevenfoot{rpgeldritch}{}{\thepage}{}
+\makeoddfoot{rpgeldritch}{}{\thepage}{}
+
+%
+% Chapter Styles
+%
+
+% a utility default chapter with commonality 'baked in'
+% https://ia803006.us.archive.org/22/items/BookOfBlackMagicWaite/Book%20of%20Black%20Magic%20-%20Waite.pdf
+\makechapterstyle{rpgdefault}{
+    \chapterstyle{default}
+
+    \setsecheadstyle{\Large\rpgprimaryfont}
+    \setsubsecheadstyle{\large\rpgprimaryfont}
+    \setsubsubsecheadstyle{\normalsize\rpgsecondaryfont}
+    \setparaheadstyle{\normalsize\rpgsecondaryfont}
+    \setsubparaheadstyle{\normalsize\rpgsecondaryfont}
+
+    % standard font sizes and primary/secondary font choices.
+    % texdoc memoir, page 103
+    \renewcommand*{\booknamefont}{\huge\rpgsecondaryfont}
+    \renewcommand*{\booknumfont}{\huge\rpgsecondaryfont}
+    \renewcommand*{\booktitlefont}{\Huge\rpgprimaryfont}
+    \renewcommand*{\partnamefont}{\huge\rpgsecondaryfont} \renewcommand*{\partnumfont}{\huge\rpgsecondaryfont} \renewcommand*{\parttitlefont}{\Huge\rpgprimaryfont} \renewcommand*{\chapnamefont}{\huge\rpgsecondaryfont\textsc} \renewcommand*{\chapnumfont}{\huge\rpgsecondaryfont\textsc} \renewcommand*{\chaptitlefont}{\Huge\rpgprimaryfont\textsc} }
+
+% copied from memoir.cls 'dash' chapter style
+\makechapterstyle{rpgfantasy}{%
+    \chapterstyle{rpgdefault}
+    \setlength{\beforechapskip}{5\onelineskip}
+    \renewcommand*{\printchaptername}{}
+    \renewcommand*{\chapternamenum}{}
+    \renewcommand*{\chapnumfont}{\normalfont\LARGE}
+    \settoheight{\midchapskip}{\chapnumfont 1}
+    \renewcommand*{\printchapternum}{
+        \centering \chapnumfont
+        \rule[0.5\midchapskip]{1em}{0.4pt} \thechapter
+        \rule[0.5\midchapskip]{1em}{0.4pt}
+    }
+    \renewcommand*{\afterchapternum}{\par\nobreak\vskip 0.5\onelineskip}
+    \renewcommand*{\printchapternonum}{\centering
+        \vphantom{\chapnumfont 1}\afterchapternum}
+    \renewcommand*{\chaptitlefont}{\HUGE\rpgprimaryfont}
+    \renewcommand*{\printchaptertitle}[1]{\centering \chaptitlefont ##1}
+    \setlength{\afterchapskip}{2.5\onelineskip}
+}
+
+% based on this victorian printing of the key of solomon
+% https://ia801308.us.archive.org/15/items/b24884431/b24884431.pdf
+\makechapterstyle{rpgsolomon}{
+    \chapterstyle{rpgdefault}
+
+    \newcommand*{\centeredsolomonsection}[1]{
+        \begin{center}\parbox{0.85\linewidth}{\Large\rpgsecondaryfont\centering\MakeUppercase{##1}}\end{center}}
+    \newcommand*{\centeredsolomonsubsection}[1]{
+        \begin{center}\parbox{0.85\linewidth}{\large\rpgsecondaryfont\centering\MakeUppercase{##1}}\end{center}}
+    \newcommand*{\centeredsolomonsubsubsection}[1]{
+        \begin{center}\parbox{0.85\linewidth}{\normalsize\rpgsecondaryfont\centering\MakeUppercase{##1}}\end{center}}
+
+    \setsecheadstyle{\centeredsolomonsection}
+    \setsubsecheadstyle{\centeredsolomonsubsection}
+    \setsubsubsecheadstyle{\centeredsolomonsubsubsection}
+
+    \renewcommand*{\printchapternum}{}
+    \renewcommand*{\printchaptername}{\centering\chapnamefont{\MakeUppercase{\@chapapp}}~\chapnumfont{\MakeUppercase{\romannumeral\thechapter}.}}
+    \renewcommand*{\printchaptertitle}[1]{\center\MakeUppercase{\chaptitlefont{##1}}}
+    \renewcommand*{\afterchaptertitle}{\par\nobreak\vskip \afterchapskip}
+}
+
+% eldritch chapter style, based on the Book of Black Magic and Pacts
+% https://ia803006.us.archive.org/22/items/BookOfBlackMagicWaite/Book%20of%20Black%20Magic%20-%20Waite.pdf
+\makechapterstyle{rpgeldritch}{
+    \chapterstyle{rpgdefault}
+
+    \newcommand*{\centeredeldritchsection}[1]{
+        \begin{center}\parbox{0.85\linewidth}{\LARGE\rpgprimaryfont\centering{##1}}\end{center}}
+    \newcommand*{\centeredeldritchsubsection}[1]{
+        \begin{center}\parbox{0.85\linewidth}{\large\rpgsecondaryfont\centering\MakeUppercase{##1}}\end{center}}
+    \newcommand*{\centeredeldritchsubsubsection}[1]{
+        \begin{center}\parbox{0.85\linewidth}{\normalsize\rpgsecondaryfont\centering\MakeUppercase{##1}}\end{center}}
+
+    \setsecheadstyle{\centeredeldritchsection}
+    \setsubsecheadstyle{\centeredeldritchsubsection}
+    \setsubsubsecheadstyle{\centeredeldritchsubsubsection}
+
+    \renewcommand*{\printchapternum}{}
+    \renewcommand*{\printchaptername}{\centering\chapnamefont{\MakeUppercase{\@chapapp}}~\chapnumfont{\MakeUppercase{\romannumeral\thechapter}}}
+    \renewcommand*{\printchaptertitle}[1]{\center\chaptitlefont{##1}}
+    \renewcommand*{\afterchaptertitle}{\par\nobreak\vskip \afterchapskip}
+}
+
+% rpgmodern chapter style, copied from lyhne in memoir.cls
+\makechapterstyle{rpgmodern}{
+    \chapterstyle{rpgdefault}
+    \setlength{\beforechapskip}{1.5cm}
+    \setlength{\afterchapskip}{1cm}
+    \setlength{\midchapskip}{2cm}
+    \renewcommand*{\chapnamefont}{\normalfont\normalsize\scshape\raggedleft}
+    \renewcommand*{\chaptitlefont}{\normalfont\normalsize\bfseries\sffamily\raggedleft}
+    \renewcommand*{\chapternamenum}{}
+    \renewcommand*{\printchapternum}{\makebox[0pt][l]{\hspace{0.2em}%
+            \resizebox{!}{2ex}{\chapnamefont\bfseries\sffamily\thechapter}}}
+    \renewcommand*{\afterchapternum}{\par\hspace{1.5cm}\hrule\vspace{0.2cm}}
+    \renewcommand*{\printchapternonum}{\vphantom{\chapnamefont 1}\afterchapternum}
+    \renewcommand*{\afterchaptertitle}{\vskip 0.2cm
+        \hrule\vskip\afterchapskip}
+}
 
 %
 % Palette
@@ -102,19 +239,6 @@
 % to set, eg, chapter, section, part titles -- https://stackoverflow.com/a/53578046/6722
 %
 
-% the modern style
-\NewDocumentCommand {\RpgSetStylesheetModern} { }
-{
-    \chapterstyle{lyhne}
-    \setmainfont{PT~Sans~Narrow}
-
-    \colorlet {rpgrulecolor} {steelblue}
-
-    \SetRpgWallpaper{1.1}{crumpled-white-paper}
-
-    \ApplyRpgStylesheet
-}
-
 \NewDocumentCommand{\ApplyRpgStylesheet}{}{%
     % Apply the stylesheet options to the document
     \bool_if:nTF \l__rpg_wallpaperenabled_bool
@@ -133,41 +257,67 @@
     }
 }
 
+% the modern style
+\NewDocumentCommand {\RpgSetStylesheetModern} { }
+{
+    \setmainfont{PT~Sans~Narrow}
+    \renewfontfamily\rpgprimaryfont{PT~Sans~Narrow}
+    \renewfontfamily\rpgsecondaryfont{PT~Sans~Narrow}
+    \setsecnumdepth{subsection}
+
+    \colorlet {rpgrulecolor} {steelblue}
+    \SetRpgWallpaper{1.1}{crumpled-white-paper}
+    \ApplyRpgStylesheet
+    \chapterstyle{rpgmodern}
+    \pagestyle{rpgmodern}
+
+}
+
 % the fantasy style
 \NewDocumentCommand {\RpgSetStylesheetFantasy} { }
 {
-    \chapterstyle{dash}
     \setmainfont{fbb}
-    % texdoc memoir, page 103
-    \renewcommand*{\booknamefont}{\huge\fontspec{QTUSA-Uncial.otf}}
-    \renewcommand*{\booknumfont}{\huge\fontspec{QTUSA-Uncial.otf}}
-    \renewcommand*{\booktitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}}
-    \renewcommand*{\partnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{QTUSA-Uncial.otf}}
+    \renewfontfamily\rpgprimaryfont{QTUSA-Uncial.otf}
+    \renewfontfamily\rpgsecondaryfont{QTUSA-Uncial.otf}
+    \renewcommand{\sectionmark}[1]{\markboth{##1}{##1}}
+    \setsecnumdepth{chapter}
 
     \colorlet {rpgrulecolor} {manuscriptbeige}
-
     \SetRpgWallpaper{1.1}{yellowed-paper}
-
     \ApplyRpgStylesheet
-
+    \chapterstyle{rpgfantasy}
+    \pagestyle{rpgfantasy}
 }
 
 % the eldritch style
 \NewDocumentCommand {\RpgSetStylesheetEldritch} { }
 {
-    \chapterstyle{dowding}
     \setmainfont{fbb}
-    % texdoc memoir, page 103
-    \renewcommand*{\booknamefont}{\huge\fontspec{yswab.otf}}
-    \renewcommand*{\booknumfont}{\huge\fontspec{yswab.otf}}
-    \renewcommand*{\booktitlefont}{\Huge\fontspec{yswab.otf}}
-    \renewcommand*{\partnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\partnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\parttitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\chapnamefont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chapnumfont}{\huge\fontspec{yswab.otf}} \renewcommand*{\chaptitlefont}{\Huge\fontspec{yswab.otf}} \renewcommand*{\secheadstyle}{\Large\fontspec{yswab.otf}} \renewcommand*{\subsecheadstyle}{\large\fontspec{yswab.otf}} \renewcommand*{\subsubsecheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\paraheadstyle}{\normalsize\fontspec{yswab.otf}} \renewcommand*{\subparaheadstyle}{\normalsize\fontspec{yswab.otf}}
+    \renewfontfamily\rpgprimaryfont{yswab.otf}
+    \renewfontfamily\rpgsecondaryfont[LetterSpace=6.0]{fbb}
+    \renewcommand{\sectionmark}[1]{\markboth{##1}{##1}}
+    \setsecnumdepth{chapter}
 
     \colorlet {rpgrulecolor} {driedblood}
-
     \SetRpgWallpaper{1.1}{white-linen-paper}
-
     \ApplyRpgStylesheet
+    \pagestyle{rpgeldritch}
+    \chapterstyle{rpgeldritch}
+}
+
+% the Key of Solomon style
+\NewDocumentCommand {\RpgSetStylesheetSolomon} { }
+{
+    \setmainfont{fbb}
+    \renewfontfamily\rpgprimaryfont[LetterSpace=12.0]{Libre~Caslon~Text}
+    \renewfontfamily\rpgsecondaryfont[LetterSpace=12.0]{Libre~Caslon~Text}
+    \renewcommand{\sectionmark}[1]{\MakeUppercase{\markboth{##1}{##1}}}
+    \setsecnumdepth{chapter}
+    \colorlet {rpgrulecolor} {driedblood}
+    \SetRpgWallpaper{1.1}{white-linen-paper}
+    \ApplyRpgStylesheet
+    \pagestyle{rpgsolomon}
+    \chapterstyle{rpgsolomon}
 }
 
 %
@@ -188,6 +338,11 @@
     \EnableRpgMedialS
 }
 
+% just need to create a `\rpgprimaryfont' command so it can be overwritten by
+% further styles.
+\newfontfamily\rpgprimaryfont{PT~Sans~Narrow}
+\newfontfamily\rpgsecondaryfont{PT~Sans~Narrow}
+
 \RpgSetStylesheetModern
 
 % switch to the fantasy stylesheet?
@@ -200,16 +355,22 @@
     \RpgSetStylesheetEldritch
 }
 
+% switch to the key of solomon stylesheet?
+\DeclareOption{solomon}{
+    \RpgSetStylesheetSolomon
+}
+
 % explicit switch to the modern stylesheet - the default
 \DeclareOption{modern}{
     \RpgSetStylesheetModern
 }
 
 \DeclareOption{a5paper}{
-    % margins are -- spine: 22.5, fore: 19, upper: 13, lower: 19
+    % margins are set here
     \settrims{0pt}{0pt}
-    \setlrmarginsandblock{22.5mm}{19mm}{*}
-    \setulmarginsandblock{13mm}{19mm}{*}
+    \setlrmarginsandblock{17.5mm}{30mm}{*}
+    \setulmarginsandblock{30mm}{30mm}{*}
+    \setheadfoot{12mm}{12mm}
     \checkandfixthelayout
 }
 
@@ -254,7 +415,7 @@
 }{
     {
             % this skipping behaviour can be added to the state-based stuff.
-            \setlength{\parskip}{-0.1em} \rpgvskip {\noindent\Large{\textsc{\textbf{#1}}}\par\nobreak}
+            \setlength{\parskip}{-0.1em} \rpgvskip {\noindent\large{\textsc{\textbf{#1}}}\par\nobreak}
             \IfNoValueF {#2} {\rpgthinvskip\noindent\emph{#2}\par\nobreak}
         }
 }
@@ -271,7 +432,7 @@
     +b % #3 - main body
 }{
     \rpgident{#1}[#2]
-
+    \rpgthinvskip
     #3
 
 }{}
