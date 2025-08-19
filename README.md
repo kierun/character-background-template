@@ -1,3 +1,10 @@
+> [!CAUTION]
+>
+> [This repository has moved to codeberge](https://codeberg.org/kierun/character-background-template)
+>
+> Please go there.
+> 
+---- 
 # character background template
 
 LaTeX template for ttRPG characters
